@@ -5,13 +5,13 @@ Re-Implementation of [_A Structured Self-Attentive Sentence Embedding_](https://
 
 | Set        | Loss     | Accuracy |
 |:-----------|---------:|---------:|
-| Training   | 1.700    | 66.70    |
-| Validation | 1.694    | 61.80    |
+| Training   | 1.700    | 66.70%   |
+| Validation | 1.694    | 61.80%   |
 
-Note that above results were obtained after training for only 3 epochs. The training set contained 20000 examples and validation set 1000 examples. The training set size in the paper is much bigger (500 000).
+Note that above results were obtained after training for only 3 epochs. The training set contained 20000 examples and validation set 1000 examples. The training set size in the paper is much bigger.
 
 ## Data
-The Yelp Data set can be download [here](http://pan.webis.de/clef16/pan16-web/author-profiling.html). 
+The Yelp dataset can be download [here](http://pan.webis.de/clef16/pan16-web/author-profiling.html). 
 After downloading, the file only has to be unzipped.
 
 ## Training
