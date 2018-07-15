@@ -1,7 +1,7 @@
 # A Structured Self-Attentive Sentence Embedding
 Re-Implementation of [_A Structured Self-Attentive Sentence Embedding_](https://arxiv.org/pdf/1703.03130.pdf) by Lin et al., 2017.
 
-# Results
+## Results
 
 | Set        | Loss     | Accuracy |
 |:-----------|---------:|---------:|
@@ -19,7 +19,7 @@ You can run the training procedure with the default settings with the following 
 `python3 train.py --data-dir <dir of unzipped yelp data>`
 
 For more information about training settings run:  
-`python3 train.py --help` 
+`python3 train.py --help`
 
 ## Visualization
 Once the model is trained, the attention pattern can be visualized as done in the paper. 
@@ -33,3 +33,7 @@ An Example of 5 reviews with different ratings is given below:
 - Adam instead of SGD
 - No gradient clipping
 - No dropout
+
+## Requirements
+- Implemented and tested with python 3.6.5
+- Python library version can be found in [requirements.txt](requirements.txt)
