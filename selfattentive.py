@@ -12,6 +12,7 @@ class SelfAttentive(nn.Module):
         super().__init__()
 
         self.rnn_cell = rnn_cell
+        self.num_classifier_hidden = num_classifier_hidden
 
         self.encoder = Encoder(num_embeddings, num_embedding_hidden, num_encoder_hidden, 
             rnn_cell=rnn_cell, bidirectional=bidirectional)
@@ -29,19 +30,19 @@ class SelfAttentive(nn.Module):
     def forward(self, sequence, lengths, targets):
 
         encoder_hidden_states = self.encoder(sequence, lengths)
-        attention_weights = self.attention(encoder_hidden_states, lengths)
+        self.attention_weights = self.attention(encoder_hidden_states, lengths)
 
-        sentence_embedding = torch.bmm(attention_weights, encoder_hidden_states)
-        sentence_embedding = sentence_embedding.view(-1, self.attention.num_hops * self.encoder.rnn.hidden_size*2)
+        sentence_embedding = torch.bmm(self.attention_weights, encoder_hidden_states)
+        self.sentence_embedding = sentence_embedding.view(-1, self.attention.num_hops * self.encoder.rnn.hidden_size*2)
 
-        predictions = self.output(sentence_embedding)
-        predictions = predictions.view(-1, 5)
+        predictions = self.output(self.sentence_embedding)
+        self.predictions = predictions.view(-1, 5)
 
-        loss, penalization_term = self.loss_fn(predictions, targets, attention_weights)
+        loss, penalization_term = self.loss_fn(self.predictions, targets, self.attention_weights)
         
-        accuracy = self.accuracy(predictions, targets)
+        accuracy = self.accuracy(self.predictions, targets)
 
-        return loss, penalization_term, accuracy, attention_weights
+        return loss, penalization_term, accuracy
 
     def loss_fn(self, predictions, targets, attention_weights):
         
@@ -59,7 +60,7 @@ class SelfAttentive(nn.Module):
 
         return ((predictions.topk(1)[1].squeeze(1) == targets).sum()).item() / targets.size(0)
 
-    def save(self, **kwargs):
+    def save(self, file_name, **kwargs):
 
         params = dict()
         params['num_embeddings'] = self.encoder.embedding.num_embeddings
@@ -76,7 +77,7 @@ class SelfAttentive(nn.Module):
             assert k not in params
             params[k] = v
 
-        torch.save(params, open('model.pt', 'wb'))
+        torch.save(params, open(file_name, 'wb'))
 
     @classmethod
     def load(cls, file_name):

@@ -10,7 +10,7 @@ from dictionary import Dictionary
 
 class YelpDataset(Dataset):
 
-    def __init__(self, data_dir, min_occurance=None, size=None):
+    def __init__(self, data_dir, min_occurance=None, size=None, load_from=None):
 
         self.size = size
         
@@ -26,17 +26,22 @@ class YelpDataset(Dataset):
         else:
             self.dictionary = Dictionary.load(dictionary_file)
 
-        dataset_file = os.path.join(data_dir, 'data.json')
-        if not os.path.exists(dataset_file):
-            self.data = self.create_dataset(data_file)
-            self.save(dataset_file)
+        if load_from is not None:
+            self.data = self.load(load_from)
         else:
+            dataset_file = os.path.join(data_dir, 'data.json')
+            if not os.path.exists(dataset_file):
+                self.data = self.create_dataset(data_file)
+                self.save(dataset_file)
             self.data = self.load(dataset_file)
 
     def __len__(self):
         return len(self.data)
+
     def __getitem__(self, idx):
-        return self.data[str(idx.item())]
+        if torch.is_tensor(idx):
+            idx = idx.item()
+        return self.data[str(idx)]
 
     def collate_fn(self, data):
 
@@ -66,7 +71,7 @@ class YelpDataset(Dataset):
 
     def create_dataset(self, data_file):
 
-        print("Creating Data...")
+        print("Creating Dataset...")
         data = defaultdict(dict)
 
         with open(data_file, 'r') as file:

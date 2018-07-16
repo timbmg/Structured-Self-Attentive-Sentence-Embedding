@@ -5,10 +5,10 @@ Re-Implementation of [_A Structured Self-Attentive Sentence Embedding_](https://
 
 | Set        | Loss     | Accuracy |
 |:-----------|---------:|---------:|
-| Training   | 1.700    | 66.70%   |
-| Validation | 1.694    | 61.80%   |
+| Training   | 1.136    | 77.26%   |
+| Validation | 1.587    | 60.91%   |
 
-Note that the above results were obtained after training for only 3 epochs. The training set contained 20000 examples and validation set 1000 examples. The training set size in the paper is much bigger.
+Above results were obtained after training for 5 epochs. The training set contained 20000 examples and validation set 1000 examples. The model with the best validation loss was choosen. Note that the training set size in the paper is much bigger.
 
 ## Data
 The Yelp dataset can be download [here](http://pan.webis.de/clef16/pan16-web/author-profiling.html). 
@@ -21,19 +21,23 @@ You can run the training procedure with the default settings with the following 
 For more information about training settings run:  
 `python3 train.py --help`
 
-## Visualization
-Once the model is trained, the attention pattern can be visualized as done in the paper. 
+## Analysis & Visualization
+Once the model is trained, the attention pattern can be visualized as done in the paper.
 The following python script will create an HTML file with the reviews and respective attention pattern.  
 `python3 viz.py`
 
-An Example of 5 reviews with different ratings is given below:  
+### Attention Pattern 
 ![](imgs/viz2.png)
+
+### Confusion Matrix
+![](imgs/cm.png)
 
 ## Differences with the paper
 - Adam instead of SGD
 - No gradient clipping
 - No dropout
+- No GLOVE word embedding initialization
 
 ## Requirements
 - Implemented and tested with python 3.6.5
-- Python library version can be found in [requirements.txt](requirements.txt)
+- Python library versions can be found in [requirements.txt](requirements.txt)
