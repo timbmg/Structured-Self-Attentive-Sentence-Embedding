@@ -24,7 +24,7 @@ For more information about training settings run:
 ## Analysis & Visualization
 Once the model is trained, the attention pattern can be visualized as done in the paper.
 The following python script will create an HTML file with the reviews and respective attention pattern.  
-`python3 viz.py`
+`python3 viz.py --data-dir <dir of unzipped yelp data> --validation-set <path to saved validation split>`
 
 ### Attention Pattern 
 ![](imgs/viz2.png)
