@@ -1,7 +1,7 @@
 seaborn==0.8.1
 pandas==0.23.3
 matplotlib==2.2.2
-torch==0.4.0
+torch==1.13.1
 nltk==3.6.5
 numpy==1.14.5
 scikit_learn==0.19.2
