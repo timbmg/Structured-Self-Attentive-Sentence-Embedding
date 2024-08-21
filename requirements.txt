@@ -4,4 +4,4 @@ matplotlib==2.2.2
 torch==1.13.1
 nltk==3.9
 numpy==1.22.0
-scikit_learn==0.19.2
+scikit_learn==1.5.0
